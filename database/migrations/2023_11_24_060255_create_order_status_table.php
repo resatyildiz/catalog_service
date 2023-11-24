@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('order_status', function (Blueprint $table) {
             $table->id();
-            $table->string("name",15);
-            $table->string("slug",15)->unique();
+            $table->string("name",35);
+            $table->string("slug",35)->unique();
             $table->timestamps();
         });
     }

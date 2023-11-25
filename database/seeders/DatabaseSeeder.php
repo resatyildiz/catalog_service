@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
                 CustomerSeeder::class,
                 OrderStatusSeeder::class,
                 OrderItemStatusSeeder::class,
-                SaleChannelTypeSeeder::class
+                SaleChannelTypeSeeder::class,
+                SaleChannelSeeder::class,
             ]
         );
     }

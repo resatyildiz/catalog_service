@@ -23,6 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('image')->nullable();
+            $table->dropForeign(['media_id']);
+            $table->dropColumn('media_id');
+        });
     }
 };

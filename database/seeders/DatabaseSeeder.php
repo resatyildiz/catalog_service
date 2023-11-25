@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
                 SaleChannelTypeSeeder::class,
                 SaleChannelSeeder::class,
                 SaleChannelItemGroupSeeder::class,
+                SettingTypeSeeder::class
             ]
         );
     }

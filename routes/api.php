@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,6 @@ Route::group(
         Route::post("/products/priceUpdate", [ProductController::class, "bulkPriceUpdate"]);
         Route::resource("/products", ProductController::class);
         Route::resource("/medias", MediaController::class);
+        Route::resource("/customers", CustomerController::class);
     }
 );

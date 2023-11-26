@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BaseListResource;
 use App\Http\Requests\BaseListRequest;
-use App\Http\Resources\CustomerResource;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
+use App\Http\Requests\StoreCustomerRequest;
 use App\Models\Customer;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -18,7 +19,7 @@ class CustomerController extends Controller
     public function index(BaseListRequest $request)
     {
         return $this->success(
-            Customer::orderBy("name","asc")->paginate($request->page_size,["*"],"page",$request->page_number)
+            Customer::orderBy("name", "asc")->paginate($request->page_size, ["*"], "page", $request->page_number)
         );
     }
 
@@ -33,9 +34,17 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
-        //
+        $request->validated();
+        $customer = Customer::create([
+            "name" => $request->first_name . " " . $request->last_name,
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "email" => strtolower($request->email),
+            "phone" => $request->phone
+        ]);
+        return $this->success($customer);
     }
 
     /**
@@ -43,7 +52,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->success(Customer::findOrFail($id));
     }
 
     /**
@@ -51,15 +60,21 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCustomerRequest $request, string $id)
     {
-        //
+        $request->validated();
+        return $this->success(Customer::findOrFail($id)->update([
+            "name" => $request->first_name . " " . $request->last_name,
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "email" => strtolower($request->email),
+            "phone" => $request->phone
+        ]));
     }
 
     /**
@@ -67,6 +82,6 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return $this->success(Customer::findOrFail($id)->delete());
     }
 }

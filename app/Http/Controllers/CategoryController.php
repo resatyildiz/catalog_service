@@ -5,15 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\HttpResponses;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-
-use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 class CategoryController extends Controller

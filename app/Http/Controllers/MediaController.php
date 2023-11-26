@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMediaRequest;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use App\Http\Resources\MediaResource;

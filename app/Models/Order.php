@@ -15,5 +15,6 @@ class Order extends Model
         'code',
         'description',
         'customer_id',
+        'sale_channel_item_id',
     ];
 }

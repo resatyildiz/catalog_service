@@ -66,4 +66,30 @@ class OrderController extends Controller
     {
         //
     }
+
+    /**
+     * Create new order with new order items
+     *
+     */
+    public function createNewOrder(Request $request)
+    {
+        $order = Order::create([
+            'code' => time(),
+            'description' => $request->description,
+            'customer_id' => $request->customer_id,
+            'sale_channel_item_id' => $request->sale_channel_item_id
+        ]);
+
+        foreach ($request->order_items as $order_item) {
+            $order->orderItems()->create([
+                'product_id' => $order_item['product_id'],
+                'quantity' => $order_item['quantity'],
+                'price' => $order_item['price'],
+                'note' => $order_item['note'],
+                'status_id' => $order_item['status_id'],
+            ]);
+        }
+
+        return $this->success(new OrderResource($order));
+    }
 }

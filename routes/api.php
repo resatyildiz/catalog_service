@@ -5,6 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SaleChannelItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +30,7 @@ Route::group(
         Route::resource("/products", ProductController::class);
         Route::resource("/medias", MediaController::class);
         Route::resource("/customers", CustomerController::class);
+        Route::resource("/orders", OrderController::class);
+        Route::resource("/salechannelitems", SaleChannelItemController::class);
     }
 );

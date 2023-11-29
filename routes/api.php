@@ -32,6 +32,7 @@ Route::group(
         Route::resource("/customers", CustomerController::class);
         Route::post("/orders/createneworder", [OrderController::class, "createNewOrder"]);
         Route::resource("/orders", OrderController::class);
+        Route::get("/salechannelitems/getWithOrders", [SaleChannelItemController::class, "getSaleChannelItemsWithOrders"]);
         Route::resource("/salechannelitems", SaleChannelItemController::class);
     }
 );

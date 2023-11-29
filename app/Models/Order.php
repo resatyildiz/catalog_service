@@ -14,7 +14,11 @@ class Order extends Model
     protected $fillable = [
         'code',
         'description',
+        /**
+         * Foreign Keys
+         */
         'customer_id',
         'sale_channel_item_id',
+        'order_status_slug'
     ];
 }

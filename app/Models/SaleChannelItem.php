@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SaleChannelItem extends Model
 {
@@ -15,4 +17,10 @@ class SaleChannelItem extends Model
         'name',
         'description',
     ];
+
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, "sale_channel_item_id", "id");
+    }
 }

@@ -7,6 +7,8 @@ use App\Http\Requests\SaleChannel\StoreSaleChannelItemRequest;
 use App\Models\SaleChannelItem;
 use App\Traits\HttpResponses;
 use App\Http\Requests\BaseListRequest;
+use App\Models\Order;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class SaleChannelItemController extends Controller
 {
@@ -76,7 +78,6 @@ class SaleChannelItemController extends Controller
             "name" => $request->name,
             "description" => $request->description
         ]));
-
     }
 
     /**
@@ -85,5 +86,24 @@ class SaleChannelItemController extends Controller
     public function destroy(string $id)
     {
         return $this->success(SaleChannelItem::findOrFail($id)->delete());
+    }
+
+    /**
+     * Get all sale channel items with orders
+     */
+
+    public function getSaleChannelItemsWithOrders()
+    {
+        // This is one item with orders
+        // $items = SaleChannelItem::where("sale_channel_slug","dine-in")->find(1)->orders;
+
+        // This is all items with orders
+        $items = SaleChannelItem::where("sale_channel_slug", "dine-in")->with(['orders' => function (Builder $query) {
+            // hide intelisense error
+            /** @var Order $query */
+            $query->where('order_status_slug', 'received');
+        }])->get();
+
+        return $this->success($items);
     }
 }

@@ -30,5 +30,23 @@ class OrderStatusSeeder extends Seeder
                 'slug' => "canceled",
             ]
         );
+        \App\Models\OrderStatus::factory()->create(
+            [
+                'name' => "Sipariş Hazırlanıyor",
+                'slug' => "processing",
+            ]
+        );
+        \App\Models\OrderStatus::factory()->create(
+            [
+                'name' => "Sipariş Hazırlandı",
+                'slug' => "prepared",
+            ]
+        );
+        \App\Models\OrderStatus::factory()->create(
+            [
+                'name' => "Sipariş Teslim Edildi",
+                'slug' => "delivered",
+            ]
+        );
     }
 }

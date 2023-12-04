@@ -31,6 +31,9 @@ Route::group(
         Route::resource("/medias", MediaController::class);
         Route::resource("/customers", CustomerController::class);
         Route::post("/orders/createneworder", [OrderController::class, "createNewOrder"]);
+        Route::post("/orders/moveOrderItems", [OrderController::class, "moveOrderItems"]);
+        Route::get("/orders/getReports", [OrderController::class, "getReports"]);
+        Route::get("/orders/getMostSoldProducts", [OrderController::class, "getMostSoldProducts"]);
         Route::resource("/orders", OrderController::class);
         Route::get("/salechannelitems/getWithOrders", [SaleChannelItemController::class, "getSaleChannelItemsWithOrders"]);
         Route::resource("/salechannelitems", SaleChannelItemController::class);

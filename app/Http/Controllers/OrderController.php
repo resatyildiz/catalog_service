@@ -111,7 +111,9 @@ class OrderController extends Controller
 
         foreach ($request->order_items as $order_item) {
             $product = Product::findOrFail($order_item['product_id']);
+
             OrderItem::updateOrCreate([
+                'id' => isset($order_item['id']) ? $order_item['id'] : null,
                 'order_id' => $order->id,
                 'product_id' => $product->id,
             ], [

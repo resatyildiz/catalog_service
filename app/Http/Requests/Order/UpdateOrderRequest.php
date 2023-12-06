@@ -27,7 +27,7 @@ class UpdateOrderRequest extends FormRequest
             'customer_id' => 'required|integer',
             'sale_channel_item_id' => 'required|integer',
             'order_items' => 'required|array',
-            'order_status_slug' => 'required|string|in:received,processing,prepared,delivered,canceled,completed',
+            'order_status_slug' => 'string|in:received,processing,prepared,delivered,canceled,completed',
         ];
     }
 }

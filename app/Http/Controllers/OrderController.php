@@ -112,13 +112,19 @@ class OrderController extends Controller
         foreach ($request->order_items as $order_item) {
             $product = Product::findOrFail($order_item['product_id']);
 
+            if ($order_item['quantity'] == 0 && $order_item['status_id'] == 1) {
+                $order_item = OrderItem::findOrFail($order_item['id']);
+                $order_item->delete();
+                continue;
+            }
+
             OrderItem::updateOrCreate([
                 'id' => isset($order_item['id']) ? $order_item['id'] : null,
                 'order_id' => $order->id,
                 'product_id' => $product->id,
             ], [
                 'quantity' => $order_item['quantity'],
-                'price' => $product->price,
+                'price' => isset($order_item["price"]) ? $order_item["price"] : $product->price,
                 'note' => $order_item['note'],
                 'status_id' => $order_item['status_id'],
             ]);
@@ -141,14 +147,14 @@ class OrderController extends Controller
      */
     public function createNewOrder(Request $request)
     {
-        $checkOrder = Order::where('sale_channel_item_id', $request->sale_channel_item_id)
-            ->where('customer_id', $request->customer_id)
-            ->where('order_status_slug', 'received')
-            ->first();
+        // $checkOrder = Order::where('sale_channel_item_id', $request->sale_channel_item_id)
+        //     ->where('customer_id', $request->customer_id)
+        //     ->where('order_status_slug', 'received')
+        //     ->first();
 
-        if ($checkOrder) {
-            return $this->error('Bu masada aktif siparişiniz bulunmaktadır.');
-        }
+        // if ($checkOrder) {
+        //     return $this->error('Bu masada aktif siparişiniz bulunmaktadır.');
+        // }
 
         $order = Order::create([
             'code' => time(),
@@ -164,7 +170,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'quantity' => $order_item['quantity'],
-                'price' => $product->price,
+                'price' => isset($order_item["price"]) ? $order_item["price"] : $product->price,
                 'note' => $order_item['note'],
                 'status_id' => $order_item['status_id'],
             ]);

@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table("orders", function (Blueprint $table) {
-            $table->string("order_status_slug", 35);
-            $table->foreign("order_status_slug")->references("slug")->on("order_status")->default("received");
+        Schema::create('payment_method_types', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
         });
     }
 
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table("orders", function (Blueprint $table) {
-            $table->dropForeign(["order_status_slug"]);
-        });
+        Schema::dropIfExists('payment_method_types');
     }
 };

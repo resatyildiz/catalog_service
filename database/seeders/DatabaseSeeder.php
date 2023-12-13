@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +22,8 @@ class DatabaseSeeder extends Seeder
                 SaleChannelTypeSeeder::class,
                 SaleChannelSeeder::class,
                 SaleChannelItemGroupSeeder::class,
-                SettingTypeSeeder::class
+                SettingTypeSeeder::class,
+                PaymentMethodTypeSeeder::class,
             ]
         );
     }

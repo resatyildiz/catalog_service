@@ -97,12 +97,17 @@ class SaleChannelItemController extends Controller
         // This is one item with orders
         // $items = SaleChannelItem::where("sale_channel_slug","dine-in")->find(1)->orders;
 
-        // This is all items with orders
-        $items = SaleChannelItem::where("sale_channel_slug", "dine-in")->with(['orders' => function (Builder $query) {
-            // hide intelisense error
-            /** @var Order $query */
-            $query->where('order_status_slug', 'received');
-        }])->get();
+        // This is all items with orders and with price total of each order item
+        $items = SaleChannelItem::where("sale_channel_slug", "dine-in")
+            ->with(["orders" => function ($query) {
+                $query
+                    ->whereIn("order_status_slug", ["received", "processing", "prepared"])
+                    ->with(["orderItems" => function ($query) {
+                        $query->selectRaw("order_id, sum(price * quantity) as price_total")
+                            ->groupBy("order_id");
+                    }]);
+            }])
+            ->get();
 
         return $this->success($items);
     }

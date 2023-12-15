@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
@@ -30,12 +31,20 @@ Route::group(
         Route::resource("/products", ProductController::class);
         Route::resource("/medias", MediaController::class);
         Route::resource("/customers", CustomerController::class);
+
+        // Order Routes
         Route::post("/orders/createneworder", [OrderController::class, "createNewOrder"]);
         Route::post("/orders/moveOrderItems", [OrderController::class, "moveOrderItems"]);
         Route::get("/orders/getReports", [OrderController::class, "getReports"]);
         Route::get("/orders/getMostSoldProducts", [OrderController::class, "getMostSoldProducts"]);
         Route::resource("/orders", OrderController::class);
+
+        // Sale Channel Item Routes
         Route::get("/salechannelitems/getWithOrders", [SaleChannelItemController::class, "getSaleChannelItemsWithOrders"]);
         Route::resource("/salechannelitems", SaleChannelItemController::class);
+
+        // Payment Routes
+        Route::post("/payments/addPayment", [PaymentController::class, "addPayment"]);
+        Route::resource("/payments", \App\Http\Controllers\PaymentController::class);
     }
 );

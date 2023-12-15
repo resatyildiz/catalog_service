@@ -33,6 +33,7 @@ Route::group(
         Route::resource("/customers", CustomerController::class);
 
         // Order Routes
+        Route::post("/orders/completeOrder", [OrderController::class, "completeOrder"]);
         Route::post("/orders/createneworder", [OrderController::class, "createNewOrder"]);
         Route::post("/orders/moveOrderItems", [OrderController::class, "moveOrderItems"]);
         Route::get("/orders/getReports", [OrderController::class, "getReports"]);

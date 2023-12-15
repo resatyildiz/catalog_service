@@ -293,4 +293,27 @@ class OrderController extends Controller
             'order_items' => $order_items,
         ]);
     }
+
+
+    public function completeOrder(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        if ($order->order_status_slug == 'completed') {
+            return $this->error('Sipariş zaten tamamlanmış.');
+        }
+
+        if ($order->order_status_slug != 'payment_received') {
+            return $this->error('Sipariş ödemesi alınmamış.');
+        }
+
+        $order->update([
+            'order_status_slug' => 'completed',
+        ]);
+        $order->orderItems()->update([
+            'status_id' => 3,
+        ]);
+
+        return $this->success(new OrderResource($order));
+    }
 }
